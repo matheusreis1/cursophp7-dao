@@ -42,12 +42,7 @@ class Usuario {
 
 		if (count($results) > 0) {//ou isset($results[0])
 
-			$row = $results[0];
-
-			$this->setId_usuario($row["id_usuario"]);
-			$this->setDeslogin($row["deslogin"]);
-			$this->setDessenha($row["dessenha"]);
-			$this->setDtcadastro(new DateTime($row["dtcadastro"]));
+			$this->setData($results[0]);
 
 		}
 
@@ -82,12 +77,7 @@ class Usuario {
 
 		if (count($results) > 0) {//ou isset($results[0])
 
-			$row = $results[0];
-
-			$this->setId_usuario($row["id_usuario"]);
-			$this->setDeslogin($row["deslogin"]);
-			$this->setDessenha($row["dessenha"]);
-			$this->setDtcadastro(new DateTime($row["dtcadastro"]));
+			$this->setData($results[0]);
 
 		} else{
 
@@ -95,6 +85,35 @@ class Usuario {
 
 		}
 
+	}
+
+	public function setData($data){
+
+		$this->setId_usuario($data["id_usuario"]);
+		$this->setDeslogin($data["deslogin"]);
+		$this->setDessenha($data["dessenha"]);
+		$this->setDtcadastro(new DateTime($data["dtcadastro"]));
+
+	}
+
+	public function insert(){
+
+		$sql = new Sql();
+
+		$results = $sql->select("CALL sp_usuario_insert(:LOGIN, :PASSWORD)", array(
+			':LOGIN'=>$this->getDeslogin(),
+			':PASSWORD'=>$this->getDessenha()
+		));
+
+		if (count($results) > 0) {
+			$this->setData($results[0]);
+		}
+
+	}
+
+	public function __toString($login = "", $password = ""){
+		$this->setDeslogin($login);
+		$this->setDessenha($password);
 	}
 
 	public function __toString(){
