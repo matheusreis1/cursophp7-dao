@@ -21,10 +21,15 @@ require_once("config.php");
 //$usuario->login("root", "123");
 //echo $usuario;
 
-//Inserir dadow
-$aluno = new Usuario("alunao", "batatao");
-$aluno->insert();
-echo $aluno;
+//Inserir dados
+//$aluno = new Usuario("alunao", "batatao");
+//$aluno->insert();
+//echo $aluno;
 
+//Atualizar dados 
+$usuario = new Usuario();
+$usuario->loadbyId(6);
+$usuario->update("professor", "teacher");
+echo $usuario;
 
  ?>
